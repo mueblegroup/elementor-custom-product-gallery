@@ -2,7 +2,7 @@
 /*
 Plugin Name: Custom Product Gallery
 Description: WooCommerce-style gallery with thumbnails slider & Elementor widget.
-Version: 2.0
+Version: 2.1
 Author: Praveen Thamotharan
 */
 
