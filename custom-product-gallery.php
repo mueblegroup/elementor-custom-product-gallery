@@ -3,7 +3,7 @@
 Plugin Name: Custom Product Gallery
 Description: WooCommerce-style gallery with thumbnails slider & Elementor widget.
 Version: 2.1
-Author: Praveen Thamotharan
+Author: Mueble Group
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
