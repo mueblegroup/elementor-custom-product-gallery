@@ -3,7 +3,7 @@
 Plugin Name: Custom Product Gallery
 Description: WooCommerce-style gallery with thumbnails slider & Elementor widget.
 Version: 2.1
-Author: Mueble Group
+Author: Praveen Thamotharan
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -23,10 +23,12 @@ class Custom_Product_Gallery {
 	public function enqueue_scripts() {
 		// Styles
 		wp_enqueue_style( 'custom-gallery-css', plugin_dir_url( __FILE__ ) . 'css/custom-gallery.css' );
+		// Ensure Swiper CSS is loaded
 		wp_enqueue_style( 'swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css' );
 		wp_enqueue_style( 'fancybox-css', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css' );
 
 		// Scripts
+		// Ensure Swiper JS is loaded
 		wp_enqueue_script( 'swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], null, true );
 		wp_enqueue_script( 'fancybox-js', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js', ['jquery'], null, true );
 		// Ensure custom-gallery-js loads after swiper-js and fancybox-js
@@ -43,13 +45,17 @@ class Custom_Product_Gallery {
 			
 			<div class="main-image swiper gallery-top">
 				<div class="swiper-wrapper">
-					<?php foreach ( $images as $img ) : ?>
+					<?php 
+                    $i = 0; // Index counter for slides
+                    foreach ( $images as $img ) : ?>
 						<div class="swiper-slide">
 							<a href="<?php echo esc_url( $img ); ?>" data-fancybox="gallery">
 								<img src="<?php echo esc_url( $img ); ?>" alt="Product Image">
 							</a>
 						</div>
-					<?php endforeach; ?>
+					<?php 
+                    $i++;
+                    endforeach; ?>
 				</div>
 				<div class="swiper-button-next main-next"></div>
 				<div class="swiper-button-prev main-prev"></div>
@@ -57,11 +63,16 @@ class Custom_Product_Gallery {
 
 			<div class="thumbnails swiper gallery-thumbs">
 				<div class="swiper-wrapper">
-					<?php foreach ( $images as $img ) : ?>
+					<?php 
+                    $i = 0; // Reset index counter
+                    foreach ( $images as $img ) : ?>
 						<div class="swiper-slide">
-							<img src="<?php echo esc_url( $img ); ?>" alt="Thumbnail">
+							<img onclick="changeGalleryImage(<?php echo $i; ?>)" 
+								src="<?php echo esc_url( $img ); ?>" alt="Thumbnail">
 						</div>
-					<?php endforeach; ?>
+					<?php 
+                    $i++;
+                    endforeach; ?>
 				</div>
 				<div class="swiper-button-next"></div>
 				<div class="swiper-button-prev"></div>
@@ -77,4 +88,3 @@ class Custom_Product_Gallery {
 }
 
 new Custom_Product_Gallery();
-// =================================================================
