@@ -1,0 +1,45 @@
+.custom-gallery {
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+.custom-gallery .main-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.custom-gallery .thumbnails {
+  margin-top: 15px;
+  position: relative;
+}
+
+.custom-gallery .thumbnails img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 0.3s;
+}
+
+.custom-gallery .thumbnails img:hover {
+  border: 2px solid #0073aa;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #0073aa;
+}
+
+/* Ensure multiple thumbnails display properly */
+.thumbnails .swiper-slide {
+  width: 80px !important; /* thumbnail size */
+  flex-shrink: 0;
+}
+
