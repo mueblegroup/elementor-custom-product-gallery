@@ -1,8 +1,8 @@
 // =================================================================
-// UPDATED js/custom-gallery.js
+// REVISED js/custom-gallery.js
 // =================================================================
 
-// REMOVED: function changeGalleryImage(src) - The manual image swap is no longer needed.
+// Removed: function changeGalleryImage(src) - The manual function is now obsolete.
 
 function initCustomGallerySwiper() {
 	console.log("initCustomGallerySwiper called");
@@ -10,35 +10,41 @@ function initCustomGallerySwiper() {
 	if (typeof Swiper !== "undefined") {
 		console.log("Swiper detected, initializing...");
 
-		// 1. Initialize the Thumbnails Swiper
+		// 1. Initialize the Thumbnails Swiper (The controlling slider)
+		// NOTE: Selector targets the element with BOTH classes 'thumbnails' and 'swiper', and 'gallery-thumbs'
 		const galleryThumbs = new Swiper(".thumbnails.swiper.gallery-thumbs", {
 			slidesPerView: 'auto',
 			spaceBetween: 10,
-			freeMode: true, // Allows swiping freely
+			freeMode: true,
 			watchSlidesProgress: true,
+			
+			// Use specific navigation selectors for the THUMBNAILS slider
 			navigation: {
-				nextEl: ".thumbnails.swiper .swiper-button-next", // Specific selector
-				prevEl: ".thumbnails.swiper .swiper-button-prev", // Specific selector
+				nextEl: ".thumbnails.swiper .swiper-button-next", 
+				prevEl: ".thumbnails.swiper .swiper-button-prev", 
 			}
 		});
 
-		// 2. Initialize the Main Image Viewer Swiper
+		// 2. Initialize the Main Image Viewer Swiper (The one with the swipe gesture)
+		// NOTE: Selector targets the element with BOTH classes 'main-image' and 'swiper', and 'gallery-top'
 		const galleryTop = new Swiper(".main-image.swiper.gallery-top", {
 			slidesPerView: 1,
 			loop: true,
 			spaceBetween: 0,
 			
 			// === ADDED: Swipe/Drag for PC and Mobile ===
-			simulateTouch: true, // Enables mouse dragging
-			grabCursor: true,   // Visual feedback for dragging
+			// These settings enable the swiping gesture you requested.
+			simulateTouch: true,  
+			grabCursor: true,   
 
-			// Navigation for the main gallery
+			// Use specific navigation selectors for the MAIN IMAGE slider
 			navigation: {
-				nextEl: ".main-image.swiper .main-next", // Specific selector
-				prevEl: ".main-image.swiper .main-prev", // Specific selector
+				nextEl: ".main-image.swiper .main-next", // Use the unique class set in PHP
+				prevEl: ".main-image.swiper .main-prev", // Use the unique class set in PHP
 			},
 
-			// === ADDED: Link the main viewer to the thumbnails ===
+			// === LINKING: Synchronize with the Thumbnails ===
+			// This makes clicking a thumbnail or swiping the main image update both.
 			thumbs: {
 				swiper: galleryThumbs,
 			},
