@@ -93,3 +93,64 @@ document.addEventListener("DOMContentLoaded", function() {
   initCustomGallerySwiper();
 
 });
+
+/* ------------------------------
+   MAIN IMAGE SWIPE (Added Feature)
+---------------------------------*/
+
+function initMainImageSwipe() {
+    let mainImg = document.getElementById("gallery-main");
+    if (!mainImg) return;
+
+    // Collect all thumbnail images (your array)
+    const thumbs = document.querySelectorAll(".thumbnails img");
+    if (thumbs.length === 0) return;
+
+    let images = [];
+    thumbs.forEach(t => images.push(t.src));
+
+    let currentIndex = images.indexOf(mainImg.src);
+
+    let startX = 0;
+    let endX = 0;
+
+    // Touch start
+    mainImg.addEventListener("touchstart", function (e) {
+        startX = e.touches[0].clientX;
+    });
+
+    // Touch end
+    mainImg.addEventListener("touchend", function (e) {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        let diff = startX - endX;
+
+        // swipe right → next image
+        if (diff > 50) {
+            currentIndex = (currentIndex + 1) % images.length;
+            changeGalleryImage(images[currentIndex]);
+        }
+
+        // swipe left → previous image
+        if (diff < -50) {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            changeGalleryImage(images[currentIndex]);
+        }
+    }
+
+    // Also update index when user clicks a thumbnail
+    thumbs.forEach((thumb, idx) => {
+        thumb.addEventListener("click", () => {
+            currentIndex = idx;
+        });
+    });
+}
+
+
+// Initialize swipe feature after page load
+document.addEventListener("DOMContentLoaded", initMainImageSwipe);
+jQuery(window).on("elementor/frontend/init", initMainImageSwipe);
+
